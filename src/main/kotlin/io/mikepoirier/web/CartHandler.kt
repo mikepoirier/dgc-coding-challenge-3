@@ -128,7 +128,7 @@ class CartHandler {
 }
 
 fun Double.toBigDecimal(): BigDecimal {
-    BigDecimal.valueOf(this).setScale(2)
+    return BigDecimal.valueOf(this).setScale(2)
 }
 
 data class NewResponse(val id: Long)
