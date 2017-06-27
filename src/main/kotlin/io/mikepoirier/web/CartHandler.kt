@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyToMono
 import reactor.core.publisher.Mono
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.concurrent.atomic.AtomicLong
 
 @Component
@@ -128,7 +129,7 @@ class CartHandler {
 }
 
 fun Double.toBigDecimal(): BigDecimal {
-    return BigDecimal.valueOf(this).setScale(2)
+    return BigDecimal.valueOf(this).setScale(2, RoundingMode.HALF_UP)
 }
 
 data class NewResponse(val id: Long)
