@@ -6,7 +6,10 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.router
 
 @Configuration
-class Routes(val hiHandler: HiHandler) {
+class Routes(
+    val hiHandler: HiHandler,
+    val cartHandler: CartHandler
+) {
 
     @Bean
     fun apiRoutes() = router {
@@ -17,7 +20,13 @@ class Routes(val hiHandler: HiHandler) {
             }
         }
         accept(MediaType.APPLICATION_JSON).nest {
-
+            "/cart".nest {
+                GET("/{cartId}", cartHandler::handleGet)
+                POST("/", cartHandler::handleCreateNewCart)
+                POST("/{cartId}", cartHandler::handlePostSingle)
+                DELETE("/{cartId}/item/{itemId}", cartHandler::handleRemoveItem)
+                DELETE("/{cartId}", cartHandler::handleRemoveCart)
+            }
         }
     }
 }

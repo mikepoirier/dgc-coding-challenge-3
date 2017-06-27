@@ -20,11 +20,11 @@ class HiHandler {
                 GreetingResponse("Hello, $name.")
             }
 
-        return createResponse(response)
+        return createOkResponse(response)
     }
 
     fun handlePost(req: ServerRequest): Mono<ServerResponse> {
-        return createResponse(Mono.error(NullPointerException("some message for exception")))
+        return createOkResponse(Mono.error(NullPointerException("some message for exception")))
     }
 }
 

@@ -5,3 +5,5 @@ import reactor.core.publisher.Mono
 
 
 data class WebException(val httpStatus: HttpStatus, val body: Any): Throwable("WebException")
+
+class CartNotFoundException: Throwable("Cart not found")

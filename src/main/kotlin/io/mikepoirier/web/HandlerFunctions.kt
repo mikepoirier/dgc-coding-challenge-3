@@ -9,9 +9,15 @@ import org.springframework.web.reactive.function.server.body
 import reactor.core.publisher.Mono
 
 
-fun createResponse(success: Mono<out Any>, errorHandler: (Throwable) -> Mono<out ServerResponse> = defaultErrorHandler()): Mono<ServerResponse> {
+fun createOkResponse(success: Mono<out Any>, errorHandler: (Throwable) -> Mono<out ServerResponse> = defaultErrorHandler()): Mono<ServerResponse> {
     return success
         .flatMap { ServerResponse.ok().json().body(Mono.just(it)) }
+        .onErrorResume(errorHandler)
+}
+
+fun createCreatedResponse(success: Mono<out Any>, errorHandler: (Throwable) -> Mono<out ServerResponse> = defaultErrorHandler()): Mono<ServerResponse> {
+    return success
+        .flatMap { ServerResponse.status(HttpStatus.CREATED).json().body(Mono.just(it)) }
         .onErrorResume(errorHandler)
 }
 
