@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyToMono
 import reactor.core.publisher.Mono
+import java.math.BigDecimal
 import java.util.concurrent.atomic.AtomicLong
 
 @Component
@@ -115,7 +116,7 @@ class CartHandler {
                                 }
                             }
                             .sum()
-                        val total = subtotal - discount
+                        val total = subtotal.toBigDecimal().minus(discount.toBigDecimal()).toDouble()
 
                         Cart(subtotal, discount, total, items)
                     }
@@ -124,6 +125,10 @@ class CartHandler {
 
         return createOkResponse(response)
     }
+}
+
+fun Double.toBigDecimal(): BigDecimal {
+    BigDecimal.valueOf(this).setScale(2)
 }
 
 data class NewResponse(val id: Long)
