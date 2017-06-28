@@ -117,6 +117,9 @@ class CartHandler {
                                 }
                             }
                             .sum()
+                            .toBigDecimal()
+                            .setScale(2, RoundingMode.HALF_UP)
+                            .toDouble()
                         val total = subtotal.toBigDecimal().minus(discount.toBigDecimal()).toDouble()
 
                         Cart(subtotal, discount, total, items)
