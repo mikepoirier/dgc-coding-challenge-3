@@ -65,15 +65,16 @@ class CartHandler {
                     null -> throw WebException(HttpStatus.NOT_FOUND, "")
                     else -> {
                         carts[cartId]?.let { items ->
-                            if(items.any { it.id == itemId }) {
-                                items.dropWhile { (id) ->
+                            val newItems = if(items.any { it.id == itemId }) {
+                                items.filter { (id) ->
                                     id == itemId
                                 }
+                                    .toMutableList()
                             } else {
                                 throw WebException(HttpStatus.NOT_FOUND, "")
                             }
 
-                            carts[cartId] = items
+                            carts[cartId] = newItems
                         }
                     }
                 }
