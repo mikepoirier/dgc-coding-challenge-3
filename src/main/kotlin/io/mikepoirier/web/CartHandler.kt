@@ -66,7 +66,7 @@ class CartHandler {
                     else -> {
                         carts[cartId]?.let { items ->
                             val newItems = if(items.any { it.id == itemId }) {
-                                items.filter { (id) ->
+                                items.dropWhile { (id) ->
                                     id == itemId
                                 }
                                     .toMutableList()
